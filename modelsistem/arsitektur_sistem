@@ -1,0 +1,107 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36">
+  <diagram name="Page-1" id="FUuy_Ap1-v1GtiRIafju">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-127" parent="1" style="whiteSpace=wrap;strokeWidth=2;dashed=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;" value="" vertex="1">
+          <mxGeometry height="425" width="312.5" x="550" y="1930" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-128" parent="1" style="whiteSpace=wrap;strokeWidth=2;dashed=1;fillColor=#FCE4EC;strokeColor=#E91E63;" value="" vertex="1">
+          <mxGeometry height="310" width="393" x="90" y="2100" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-129" parent="1" style="whiteSpace=wrap;strokeWidth=2;strokeColor=#F9A825;dashed=1;dashPattern=8 8;fillColor=#FFFDE7;" value="" vertex="1">
+          <mxGeometry height="210" width="433" x="67" y="1870" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-167" edge="1" parent="1" source="F-LgyWxOTgMUKrTN5a3j-132" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;" target="F-LgyWxOTgMUKrTN5a3j-133" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-132" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=14;" value="Preprocessing&#xa;(clean metadata &amp; clean lyrics)" vertex="1">
+          <mxGeometry height="70" width="260" x="90" y="1890" as="geometry" />
+        </mxCell>
+        <mxCell id="mPpOAeiNnx2AaxVl5xUs-1" edge="1" parent="1" source="F-LgyWxOTgMUKrTN5a3j-133" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="F-LgyWxOTgMUKrTN5a3j-134">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-133" parent="1" style="whiteSpace=wrap;strokeWidth=2;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=14;" value="Merge Dataset&#xa;→ 20,101 songs" vertex="1">
+          <mxGeometry height="70" width="260" x="90" y="1988" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-134" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=14;fillColor=#FFCDD2;strokeColor=#E91E63;" value="TF-IDF Weighting" vertex="1">
+          <mxGeometry height="40" width="140" x="150" y="2125" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-135" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=18;fillColor=#FFCDD2;strokeColor=#E91E63;fontStyle=1" value="GloVe" vertex="1">
+          <mxGeometry height="60" width="160" x="140" y="2210" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-164" edge="1" parent="1" source="F-LgyWxOTgMUKrTN5a3j-136" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=1;" target="F-LgyWxOTgMUKrTN5a3j-137">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="2348" />
+              <mxPoint x="520" y="2015" />
+              <mxPoint x="623" y="2015" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-136" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=14;fillColor=#FFCDD2;strokeColor=#E91E63;" value="L2 Normalization&#xa;→ 300-dim song vector" vertex="1">
+          <mxGeometry height="69" width="182" x="129" y="2311" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-137" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;" value="FAISS IndexFlatIP" vertex="1">
+          <mxGeometry height="54" width="181" x="623" y="2005" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-138" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Top-K Retrieval (K=20)" vertex="1">
+          <mxGeometry height="54" width="220" x="603.5" y="2095" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-139" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Genre-Based Relevance Check" vertex="1">
+          <mxGeometry height="55" width="260" x="583.5" y="2180" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-140" parent="1" style="whiteSpace=wrap;strokeWidth=2;fontSize=14;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1" value="Output: Music Recommendations" vertex="1">
+          <mxGeometry height="54" width="252" x="587.5" y="2265" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-147" edge="1" parent="1" source="F-LgyWxOTgMUKrTN5a3j-134" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;strokeWidth=1;" target="F-LgyWxOTgMUKrTN5a3j-135" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-148" edge="1" parent="1" source="F-LgyWxOTgMUKrTN5a3j-135" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;strokeWidth=1;" target="F-LgyWxOTgMUKrTN5a3j-136" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-150" edge="1" parent="1" source="F-LgyWxOTgMUKrTN5a3j-137" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;strokeWidth=1;" target="F-LgyWxOTgMUKrTN5a3j-138" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-151" edge="1" parent="1" source="F-LgyWxOTgMUKrTN5a3j-138" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;strokeWidth=1;" target="F-LgyWxOTgMUKrTN5a3j-139" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-152" edge="1" parent="1" source="F-LgyWxOTgMUKrTN5a3j-139" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;strokeWidth=1;" target="F-LgyWxOTgMUKrTN5a3j-140" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-158" edge="1" parent="1" source="F-LgyWxOTgMUKrTN5a3j-155" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;" target="F-LgyWxOTgMUKrTN5a3j-132">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-155" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;verticalAlign=middle;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=0" value="SpotifyFeatures" vertex="1">
+          <mxGeometry height="80" width="100" x="100" y="1750" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-160" edge="1" parent="1" source="F-LgyWxOTgMUKrTN5a3j-156" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;" target="F-LgyWxOTgMUKrTN5a3j-132">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-156" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=middle;" value="Lyrics-Data" vertex="1">
+          <mxGeometry height="80" width="88.5" x="280.5" y="1750" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-157" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="Data Acquisition and Preparation" vertex="1">
+          <mxGeometry height="30" width="119" x="360" y="1960" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-161" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="Lyric Representation" vertex="1">
+          <mxGeometry height="30" width="119" x="333" y="2180" as="geometry" />
+        </mxCell>
+        <mxCell id="F-LgyWxOTgMUKrTN5a3j-168" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="Similarity Search &amp;amp; Recommendation" vertex="1">
+          <mxGeometry height="30" width="144.38" x="632.8100000000001" y="1950" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

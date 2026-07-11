@@ -173,6 +173,93 @@ def plot_per_fold(results, model_name):
     print(f"✅ Saved: {path}")
 
 
+def plot_per_fold_comparison(all_results):
+    """
+    Line chart per-fold yang membandingkan SEMUA model dalam 1 figure.
+    Format sama persis dengan recommendersysMusic.ipynb:
+    - 3 subplot: Hit Rate (normalized), MRR, NDCG
+    - Hit Rate dinormalisasi ke skala 0-1
+    - Annotasi: persentase untuk Hit Rate, 4 desimal untuk MRR/NDCG
+    """
+    # Kumpulkan data per-fold dari setiap model
+    model_fold_data = {}
+    for name, data in all_results.items():
+        fold_rows = [r for r in data['results']['Fold Results']
+                     if str(r['Fold']).startswith('Fold')]
+        model_fold_data[name] = {
+            'folds': [r['Fold'] for r in fold_rows],
+            'hit_rate_pct': [float(r['Hit Rate (%)']) for r in fold_rows],
+            'hit_rate_norm': [float(r['Hit Rate (%)']) / 100.0 for r in fold_rows],
+            'mrr': [float(r['MRR']) for r in fold_rows],
+            'ndcg': [float(r['NDCG']) for r in fold_rows],
+        }
+
+    n_folds = len(list(model_fold_data.values())[0]['folds'])
+    x = list(range(1, n_folds + 1))
+    fold_labels = list(model_fold_data.values())[0]['folds']
+
+    # Style per model — sama persis dengan referensi
+    line_styles = {
+        'FastText': {'color': '#3333CC', 'marker': 'o', 'linestyle': '-'},
+        'GloVe':    {'color': '#CC0000', 'marker': 's', 'linestyle': '-'},
+        'Word2Vec': {'color': '#009933', 'marker': '^', 'linestyle': '-'},
+    }
+
+    # 3 metrik: (data_key, y_label, annotation_format)
+    metrics = [
+        ('hit_rate_norm', 'Hit Rate (normalized)', lambda v, d: f"{d:.2f}%"),
+        ('mrr',           'MRR',                   lambda v, d: f"{v:.4f}"),
+        ('ndcg',          'NDCG',                  lambda v, d: f"{v:.4f}"),
+    ]
+
+    fig, axes = plt.subplots(1, 3, figsize=(20, 5.5))
+    fig.patch.set_facecolor('white')
+
+    for ax, (key, ylabel, fmt_fn) in zip(axes, metrics):
+        ax.set_facecolor('white')
+
+        all_vals = []
+        for name in all_results:
+            style = line_styles.get(name, {'color': 'gray', 'marker': 'o', 'linestyle': '-'})
+            vals = model_fold_data[name][key]
+            pct_vals = model_fold_data[name]['hit_rate_pct']
+            all_vals.extend(vals)
+
+            ax.plot(x, vals, marker=style['marker'], linestyle=style['linestyle'],
+                    color=style['color'], linewidth=2, markersize=7,
+                    label=name, zorder=3)
+
+            # Annotasi di setiap titik
+            for xi, vi, pi in zip(x, vals, pct_vals):
+                label_text = fmt_fn(vi, pi)
+                ax.annotate(label_text, (xi, vi),
+                            textcoords='offset points', xytext=(0, 10),
+                            ha='center', fontsize=7.5, fontweight='bold',
+                            color=style['color'])
+
+        # Y-axis: auto-scale ketat sesuai data range
+        y_min = min(all_vals)
+        y_max = max(all_vals)
+        y_margin = (y_max - y_min) * 0.15
+        ax.set_ylim([y_min - y_margin, y_max + y_margin * 2.5])
+
+        ax.set_xlabel('Fold', fontsize=12, fontweight='bold')
+        ax.set_ylabel(ylabel, fontsize=12, fontweight='bold')
+        ax.set_xticks(x)
+        ax.set_xticklabels(fold_labels)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.grid(axis='y', alpha=0.3, linestyle='-', zorder=1)
+        ax.legend(loc='lower center', bbox_to_anchor=(0.5, -0.20),
+                  ncol=3, fontsize=9, frameon=False)
+
+    plt.tight_layout()
+    path = os.path.join(VISUALISASI_PATH, 'per_fold_comparison_all_models.png')
+    plt.savefig(path, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.show()
+    print(f"✅ Saved: {path}")
+
+
 def plot_all_comparisons(all_results):
     """
     Jalankan semua visualisasi sekaligus.
@@ -201,7 +288,10 @@ def plot_all_comparisons(all_results):
     plot_radar_chart(df_vis)
     plot_heatmap(df_vis)
 
-    # Per-fold untuk setiap model
+    # Per-fold comparison (semua model dalam 1 figure)
+    plot_per_fold_comparison(all_results)
+
+    # Per-fold untuk setiap model (individual)
     for name, data in all_results.items():
         plot_per_fold(data['results'], name)
 

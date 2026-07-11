@@ -54,3 +54,6 @@ Thumbs.db
 
 # Past/backup notebooks
 past/
+
+# HuggingFace Space deploy folder
+huggingface_deploy/

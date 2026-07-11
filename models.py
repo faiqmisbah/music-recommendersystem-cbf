@@ -73,8 +73,9 @@ def load_model(model_name):
     if os.path.exists(saved_path):
         print(f"📂 Memuat {model_name} dari: {saved_path}")
         try:
-            mmap_mode = 'r' if model_name == 'Word2Vec' else None
-            model = KeyedVectors.load(saved_path, mmap=mmap_mode)
+            # Selalu pakai mmap='r' agar kompatibel dengan Google Drive Desktop
+            # (file streaming/placeholder tidak bisa di-load langsung tanpa mmap)
+            model = KeyedVectors.load(saved_path, mmap='r')
             print(f"✅ {model_name} loaded! Vocabulary: {len(model):,} kata")
         except Exception as e:
             print(f"⚠️ Gagal load: {e}")
@@ -126,9 +127,8 @@ def generate_tfidf_embeddings(model, merged_df, model_name):
     # Cek apakah sudah ada
     if os.path.exists(emb_path):
         print(f"📂 Embeddings ditemukan, loading...")
-        with open(emb_path, 'rb') as f:
-            data = f.read()
-        embeddings = np.load(io.BytesIO(data))
+        # Pakai mmap agar kompatibel dengan Google Drive Desktop
+        embeddings = np.array(np.load(emb_path, mmap_mode='r')).astype('float32')
         print(f"✅ {model_name} Embeddings loaded: {embeddings.shape}")
     else:
         print(f"⚙️ Generating {model_name} embeddings dengan TF-IDF weighting...")
