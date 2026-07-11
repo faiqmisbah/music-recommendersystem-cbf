@@ -1,0 +1,56 @@
+# =====================================================
+# .gitignore - Music Recommender System
+# =====================================================
+
+# Dataset files (terlalu besar untuk GitHub)
+dataset/lagu/
+dataset/lirik/
+dataset/user/
+*.csv
+
+# Model files (terlalu besar, download via gensim)
+saved_models/
+*.kv
+*.kv.vectors.npy
+*.model
+*.model.wv.vectors.npy
+
+# Embeddings numpy files (bisa di-generate ulang)
+embeddings/
+*.npy
+
+# FAISS index files
+faiss_index/
+
+# Visualisasi output
+visualisasi/
+visual_evaluation/
+
+# User data generated
+user_data_profiles/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Python virtual environment
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+
+# VS Code
+.vscode/
+
+# Gradio temp files
+.gradio/
+flagged/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Past/backup notebooks
+past/
