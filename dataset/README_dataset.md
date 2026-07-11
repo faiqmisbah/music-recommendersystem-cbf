@@ -1,80 +1,66 @@
-# 📊 Dataset Information / Informasi Dataset
+# 📊 Dataset Information
 
-Dataset yang digunakan dalam penelitian ini **tidak disertakan** di repositori ini karena keterbatasan ukuran file dan lisensi. Silakan download dari sumber berikut dan letakkan di folder yang sesuai.
-
----
-
-## 1. 🎵 Spotify Audio Features (`SpotifyFeatures.csv`)
-
-**Sumber / Source:**
-> Kaggle — Spotify Dataset 1921-2020, 600k+ Tracks
-> 🔗 https://www.kaggle.com/datasets/yamaerenay/spotify-dataset-19212020-600k-tracks
-
-**Deskripsi:** Dataset berisi audio features dari jutaan lagu di Spotify, termasuk:
-- `track_name` — Judul lagu
-- `artist_name` — Nama artis
-- `genre` — Genre musik
-- `popularity` — Tingkat popularitas (0–100)
-- `danceability`, `energy`, `valence`, dll. — Fitur audio
-
-**Letakkan di:** `dataset/lagu/SpotifyFeatures.csv`
+The raw dataset used in this research is **not stored** directly in this repository due to file size constraints and licensing terms. You can download the source datasets from the Kaggle links below, or download the pre-processed assets directly from Google Drive.
 
 ---
 
-## 2. 📝 Song Lyrics (`lyrics-data.csv`)
+## 🚀 Pre-processed Data & Model Assets (Recommended)
 
-**Sumber / Source:**
-> Kaggle — Song Lyrics Dataset
-> 🔗 https://www.kaggle.com/datasets/neisse/scrapped-lyrics-from-6-genres
+If you wish to run the notebook/Gradio UI directly without downloading the massive raw CSVs and retraining the word embeddings (which takes time and resources), you can download the pre-processed datasets, trained embeddings, and FAISS index files from:
+👉 **Google Drive Repository**: [http://tiny.cc/faiqresearch](http://tiny.cc/faiqresearch)
 
-**Deskripsi:** Dataset berisi lirik lagu dari berbagai artis dan genre:
-- `SName` — Judul lagu
-- `ALink` — Link artis
-- `Lyric` — Teks lirik lagu
-
-**Letakkan di:** `dataset/lirik/lyrics-data.csv`
+Download the files from the link above and place them in the following directories:
+* Files from `data/` folder (`merged_songs.csv`, `user_profiles.csv`) → Place under `research/dataset/` or `huggingface_deploy/data/`
+* Files from `embeddings/` folder (`*_embeddings_tfidf.npy`) → Place under `research/embeddings/` or `huggingface_deploy/embeddings/`
 
 ---
 
-## 3. 👤 User Top Tracks (`user_top_tracks.csv`)
+## 📥 Raw Datasets from Source (Kaggle)
 
-**Sumber / Source:**
-> Data dikumpulkan dari Spotify User History (user study)
+If you prefer to preprocess the data from scratch, download these raw datasets:
 
-**Deskripsi:** Dataset riwayat lagu yang disukai pengguna:
-- `user_id` — ID pengguna
-- `liked_song_indices` — Indeks lagu yang disukai
+### 1. 🎵 Spotify Tracks (`SpotifyFeatures.csv`)
+* **Source:** Kaggle — Ultimate Spotify Tracks DB
+* **Link:** [https://www.kaggle.com/datasets/zaheenhamidani/ultimate-spotify-tracks-db](https://www.kaggle.com/datasets/zaheenhamidani/ultimate-spotify-tracks-db)
+* **Description:** Contains audio features and metadata for ~232k Spotify songs.
+* **Save as:** `research/dataset/lagu/SpotifyFeatures.csv`
 
-**Letakkan di:** `dataset/user/user_top_tracks.csv`
+### 2. 📝 Song Lyrics (`lyrics-data.csv`)
+* **Source:** Kaggle — Song Lyrics Dataset (Scrapped lyrics from 6 genres)
+* **Link:** [https://www.kaggle.com/datasets/neisse/scrapped-lyrics-from-6-genres](https://www.kaggle.com/datasets/neisse/scrapped-lyrics-from-6-genres)
+* **Description:** Contains song lyrics across multiple genres.
+* **Save as:** `research/dataset/lirik/lyrics-data.csv`
+
+### 3. 👤 User Music History (`user_top_tracks.csv`)
+* **Source:** Kaggle — Music Listening Data (500k Users)
+* **Link:** [https://www.kaggle.com/datasets/gabrielkahen/music-listening-data-500k-users](https://www.kaggle.com/datasets/gabrielkahen/music-listening-data-500k-users)
+* **Description:** Contains user listening history and profiles.
+* **Save as:** `research/dataset/user/user_top_tracks.csv`
 
 ---
 
-## 📁 Struktur Folder Dataset
+## 📁 Dataset Folder Structure
 
-Setelah download, susun folder seperti berikut:
+After downloading, arrange your directories as follows:
 
 ```
 research/
 └── dataset/
     ├── lagu/
-    │   └── SpotifyFeatures.csv       ← Taruh di sini
+    │   └── SpotifyFeatures.csv
     ├── lirik/
-    │   └── lyrics-data.csv           ← Taruh di sini
+    │   └── lyrics-data.csv
     └── user/
-        └── user_top_tracks.csv       ← Taruh di sini
+        └── user_top_tracks.csv
 ```
 
 ---
 
-## 📊 Statistik Dataset
+## 📊 Dataset Statistics
 
-| Dataset | Jumlah Record | Ukuran File |
-|---------|--------------|-------------|
-| SpotifyFeatures.csv | ~232,000 lagu | ~43 MB |
-| lyrics-data.csv | ~379,000 lirik | ~330 MB |
-| user_top_tracks.csv | ~100 user | <1 MB |
-| **Setelah merge** | **~20,101 lagu** | — |
-
----
-
-> ⚠️ **Catatan:** Dataset `lyrics-data.csv` berukuran cukup besar. Pastikan koneksi internet stabil saat mendownload dari Kaggle.
+| Dataset | Records / Rows | File Size |
+|---------|----------------|-----------|
+| SpotifyFeatures.csv | ~232,000 | ~43 MB |
+| lyrics-data.csv | ~379,000 | ~330 MB |
+| user_top_tracks.csv | ~100 users | <1 MB |
+| **Merged Dataset (Valid)** | **~20,101 songs** | — |

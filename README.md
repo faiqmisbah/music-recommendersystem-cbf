@@ -1,6 +1,6 @@
-# 🎵 Music Recommender System Based on Content-Based Filtering with GloVe
+# 🎵 Music Recommender System Based on Content-Based Filtering
 
-> Sistem Rekomendasi Musik Berbasis Content-Based Filtering menggunakan Word Embedding (GloVe, FastText, Word2Vec)
+> Music Recommendation System using Content-Based Filtering with Word Embeddings (GloVe, FastText, Word2Vec)
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://python.org)
 [![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)](https://jupyter.org)
@@ -8,9 +8,9 @@
 
 ---
 
-## 📖 Overview / Gambaran Umum
+## 📖 Overview
 
-Proyek ini merupakan implementasi sistem rekomendasi musik berbasis **Content-Based Filtering** yang memanfaatkan teknik **Word Embedding** untuk merepresentasikan lirik lagu. Penelitian ini membandingkan tiga model word embedding:
+This project implements a music recommendation system using a **Content-Based Filtering** approach powered by **Word Embeddings** to represent song lyrics. It compares three distinct word embedding models:
 
 | Model | Hit Rate | MRR | NDCG |
 |-------|----------|-----|------|
@@ -18,65 +18,65 @@ Proyek ini merupakan implementasi sistem rekomendasi musik berbasis **Content-Ba
 | 🥈 FastText | 90.83% | 0.4692 | 0.5615 |
 | 🥉 Word2Vec | 90.44% | 0.4701 | 0.5606 |
 
-**GloVe** terpilih sebagai model terbaik berdasarkan evaluasi K-Fold Cross Validation (K=5) dengan Top-K=20.
+**GloVe** is selected as the best-performing model based on a 5-Fold Cross Validation evaluation (K=5) with Top-K=20.
 
 ---
 
-## 🗂️ Project Structure / Struktur Proyek
+## 🗂️ Project Structure
 
 ```
 research/
 │
-├── main.ipynb                 ← Notebook utama (jalankan ini)
+├── main.ipynb                 ← Main notebook (run this)
 │
-├── config.py                  ← Konfigurasi path & parameter
-├── preprocessing.py           ← Load & merge dataset
-├── models.py                  ← Load model, generate embeddings
-├── evaluation.py              ← K-Fold Cross Validation
-├── visualization.py           ← Visualisasi perbandingan model
+├── config.py                  ← Path and model parameters configuration
+├── preprocessing.py           ← Dataset loading and merging logic
+├── models.py                  ← Model downloader and TF-IDF weighted embedding generator
+├── evaluation.py              ← K-Fold Cross Validation evaluator
+├── visualization.py           ← Performance comparison plotting functions
+├── gradio_app.py              ← Interactive UI logic
+├── deploy.py                  ← Conversion and automated deployment to Hugging Face
 │
-├── README.md                  ← Dokumentasi proyek ini
-├── requirements.txt           ← Daftar dependensi Python
-├── .gitignore                 ← File yang diabaikan Git
+├── README.md                  ← Project documentation
+├── requirements.txt           ← Python dependencies list
+├── .gitignore                 ← Git ignored files configuration
 │
+├── modelfigures/              ← System architecture diagrams and UI screenshots
 └── dataset/
-    └── README_dataset.md      ← Info & tautan sumber dataset
+    └── README_dataset.md      ← Dataset information and download links
 ```
 
 ---
 
-## 📊 Dataset
+## 📊 Dataset & Pre-computed Files
 
-Dataset yang digunakan dalam penelitian ini:
-
-1. **Spotify Features** – Audio features dan metadata lagu dari Spotify
-2. **Song Lyrics** – Lirik lagu dari berbagai artis
-3. **User Top Tracks** – Data riwayat lagu yang disukai pengguna
-
-> Dataset tidak disertakan di repositori ini. Lihat detail di [`dataset/README_dataset.md`](dataset/README_dataset.md)
+The dataset used in this project is not stored directly in this repository due to file size constraints.
+- Detailed download instructions and Kaggle links are available in [`dataset/README_dataset.md`](dataset/README_dataset.md).
+- Pre-computed embeddings, trained models, and FAISS index files are shared on Google Drive. You can download them directly to run the project without training:
+  👉 **Google Drive Pre-computed Data**: [http://tiny.cc/faiqresearch](http://tiny.cc/faiqresearch)
 
 ---
 
-## ⚙️ Metodologi / Methodology
+## ⚙️ Methodology
 
-Alur penelitian terdiri dari beberapa tahap:
+The system pipeline consists of the following phases:
 
-1. **Data Preprocessing** (`preprocessing.py`) – Load, normalisasi, dan merge dataset lagu + lirik
-2. **Word Embedding** (`models.py`) – Representasi lirik menggunakan GloVe, FastText, Word2Vec
-3. **TF-IDF Weighting** (`models.py`) – Pembobotan kata menggunakan TF-IDF
-4. **FAISS Indexing** (`models.py`) – Pencarian similaritas menggunakan Facebook AI Similarity Search
-5. **K-Fold Evaluation** (`evaluation.py`) – Evaluasi 5-Fold CV: Hit Rate, MRR, NDCG
-6. **Visualisasi** (`visualization.py`) – Bar chart, radar chart, heatmap perbandingan
-7. **UI Demo** (`main.ipynb`) – Antarmuka Gradio untuk demonstrasi
+1. **Data Preprocessing** (`preprocessing.py`) – Load, clean, and merge Spotify features dataset with lyrics data.
+2. **Word Embedding Representation** (`models.py`) – Represent lyrics text using pre-trained GloVe, FastText, and Word2Vec models.
+3. **TF-IDF Weighting** (`models.py`) – Weight embedding vectors based on term importance.
+4. **FAISS Indexing** (`models.py`) – Build a fast similarity index using Facebook AI Similarity Search.
+5. **K-Fold Evaluation** (`evaluation.py`) – Perform 5-Fold Cross Validation using Hit Rate, MRR, and NDCG metrics.
+6. **Visualization** (`visualization.py`) – Generate performance bar charts, radar charts, heatmaps, and per-fold lines.
+7. **Gradio UI & Deployment** (`gradio_app.py`, `deploy.py`) – Run a local interactive interface or automatically deploy it to Hugging Face Spaces.
 
 ---
 
-## 🚀 How to Run / Cara Menjalankan
+## 🚀 How to Run
 
-### 1. Clone Repositori
+### 1. Clone the Repository
 ```bash
-git clone https://github.com/[username]/music-recommender-glove.git
-cd music-recommender-glove
+git clone https://github.com/faiqmisbah/music-recommendersystem-cbf.git
+cd music-recommendersystem-cbf
 ```
 
 ### 2. Install Dependencies
@@ -84,27 +84,27 @@ cd music-recommender-glove
 pip install -r requirements.txt
 ```
 
-### 3. Setup Dataset
-- Download dataset sesuai instruksi di [`dataset/README_dataset.md`](dataset/README_dataset.md)
-- Letakkan di folder `dataset/lagu/`, `dataset/lirik/`, `dataset/user/`
+### 3. Setup Dataset & Models
+- Follow the instructions in [`dataset/README_dataset.md`](dataset/README_dataset.md) to download raw datasets, or download pre-computed assets from [http://tiny.cc/faiqresearch](http://tiny.cc/faiqresearch).
+- Place them in the corresponding folders: `dataset/lagu/`, `dataset/lirik/`, `dataset/user/`.
 
-### 4. Jalankan Notebook
-Buka `main.ipynb` di Jupyter Notebook atau VS Code, lalu jalankan cell dari atas ke bawah.
-
+### 4. Run the Jupyter Notebook
+Open `main.ipynb` in Jupyter Notebook/VS Code and execute the cells sequentially:
 ```
 main.ipynb
-├── Tahap 1: Setup & Import modul
-├── Tahap 2: Load & Preprocessing
-├── Tahap 3: Training & Evaluasi (FastText, GloVe, Word2Vec)
-├── Tahap 4: Visualisasi Perbandingan
-├── Tahap 5: Ringkasan Hasil
-└── Tahap 6: UI Gradio Demo
+├── Step 1: Setup & Import modules
+├── Step 2: Load & Preprocessing
+├── Step 3: Training & Evaluation (FastText, GloVe, Word2Vec)
+├── Step 4: Visualizations
+├── Step 5: Summary of Results
+├── Step 6: Local Gradio UI Demo
+└── Step 7: Deploy to Hugging Face Spaces
 ```
 
-Atau jalankan modul secara terpisah dari terminal:
+Alternatively, run individual modules via the terminal:
 ```bash
-python preprocessing.py    # Load & merge dataset
-python models.py           # Training & evaluasi semua model
+python preprocessing.py    # Run dataset load and merge
+python models.py           # Run training and evaluation for all models
 ```
 
 ---
@@ -113,41 +113,43 @@ python models.py           # Training & evaluasi semua model
 
 - Python 3.10+
 - Jupyter Notebook / VS Code
-- Google Drive Desktop (untuk akses dataset)
+- Google Drive Desktop (optional, for streaming path configuration)
 
-Lihat `requirements.txt` untuk daftar lengkap library.
+See `requirements.txt` for the list of Python packages.
 
 ---
 
-## 📈 Hasil Evaluasi / Evaluation Results
+## 📈 Evaluation Results
 
-Evaluasi menggunakan **5-Fold Cross Validation** dengan **Top-K=20** dan **Related Genre Matching**:
+Evaluation is carried out using **5-Fold Cross Validation** with **Top-K=20** and **Related Genre Matching**:
 
-| Metrik | GloVe | FastText | Word2Vec |
+| Metric | GloVe | FastText | Word2Vec |
 |--------|-------|----------|----------|
-| Hit Rate | 92.65% | 90.83% | 90.44% |
-| MRR | 0.4886 | 0.4692 | 0.4701 |
-| NDCG | 0.5792 | 0.5615 | 0.5606 |
+| **Hit Rate** | **92.65%** | 90.83% | 90.44% |
+| **MRR** | **0.4886** | 0.4692 | 0.4701 |
+| **NDCG** | **0.5792** | 0.5615 | 0.5606 |
 
 ---
 
-## 📁 Penjelasan Modul / Module Description
+## 📁 Module Reference
 
-| File | Deskripsi |
-|------|-----------|
-| `config.py` | Konfigurasi path, parameter model (Top-K, K-Folds), genre groups |
-| `preprocessing.py` | Fungsi cleaning metadata & lirik, load & merge 3 dataset CSV |
-| `models.py` | Load pre-trained model (gensim), TF-IDF weighted embeddings, FAISS index |
-| `evaluation.py` | K-Fold CV dengan metrik Hit Rate, MRR, NDCG |
-| `visualization.py` | Bar chart, radar chart, heatmap, per-fold line chart |
-| `main.ipynb` | Notebook utama yang mengimpor semua modul di atas |
+| File | Description |
+|------|-------------|
+| `config.py` | Global configuration of directory paths, model hyperparameters, and genre groups |
+| `preprocessing.py` | String cleaning, normalizations, and data-merging routines for CSV sources |
+| `models.py` | Pre-trained model loading, TF-IDF embedding computation, and FAISS indexing |
+| `evaluation.py` | Implementation of K-Fold CV, Hit Rate, MRR, and NDCG metrics |
+| `visualization.py` | Charting functions (bar, radar, heatmap, fold comparisons) |
+| `gradio_app.py` | Local and cloud-compatible Gradio Blocks UI layout |
+| `deploy.py` | Automatic packaging and deployment wrapper for Hugging Face Spaces |
+| `main.ipynb` | Main entry point notebook orchestrating all modules |
 
 ---
 
-## 👤 Author / Penulis
+## 👤 Author
 
 **Faiq Misbah Yazdi**
-Tugas Akhir / Skripsi — 2025
+Undergraduate Thesis / Final Project — 2025
 
 ---
 
