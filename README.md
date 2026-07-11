@@ -1,6 +1,6 @@
-# 🎵 Music Recommender System Based on Content-Based Filtering
+# 🎵 Music Recommender System Based on Content-Based Filtering with GloVe
 
-> Music Recommendation System using Content-Based Filtering with Word Embeddings (GloVe, FastText, Word2Vec)
+> A study implementing a Content-Based Filtering music recommendation system powered by Word Embeddings. The system represents song lyrics using GloVe (best-performing model), FastText, and Word2Vec models, and computes recommendations utilizing Facebook AI Similarity Search (FAISS).
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://python.org)
 [![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)](https://jupyter.org)
@@ -149,7 +149,8 @@ Evaluation is carried out using **5-Fold Cross Validation** with **Top-K=20** an
 ## 👤 Author
 
 **Faiq Misbah Yazdi**
-Undergraduate Thesis / Final Project — 2025
+Undergraduate Thesis / Final Project — 2025-2026  
+📧 Email: [faiqmisbah019@gmail.com](mailto:faiqmisbah019@gmail.com)
 
 ---
 
