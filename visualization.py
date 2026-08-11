@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+import matplotlib.patheffects as path_effects
 import seaborn as sns
 
 from config import VISUALISASI_PATH
@@ -212,8 +213,14 @@ def plot_per_fold_comparison(all_results):
         ('ndcg',          'NDCG',                  lambda v, d: f"{v:.4f}"),
     ]
 
-    fig, axes = plt.subplots(1, 3, figsize=(20, 5.5))
+    fig, axes = plt.subplots(1, 3, figsize=(23, 8))
     fig.patch.set_facecolor('white')
+
+    # Ukuran font diperbesar & ditebalkan
+    DATA_LABEL_FONT_SIZE = 15
+    AXIS_TITLE_FONT_SIZE = 18
+    TICK_LABEL_FONT_SIZE = 16
+    LEGEND_FONT_SIZE = 16
 
     for ax, (key, ylabel, fmt_fn) in zip(axes, metrics):
         ax.set_facecolor('white')
@@ -222,36 +229,81 @@ def plot_per_fold_comparison(all_results):
         for name in all_results:
             style = line_styles.get(name, {'color': 'gray', 'marker': 'o', 'linestyle': '-'})
             vals = model_fold_data[name][key]
-            pct_vals = model_fold_data[name]['hit_rate_pct']
             all_vals.extend(vals)
 
             ax.plot(x, vals, marker=style['marker'], linestyle=style['linestyle'],
-                    color=style['color'], linewidth=2, markersize=7,
+                    color=style['color'], linewidth=3.2, markersize=11,
                     label=name, zorder=3)
 
-            # Annotasi di setiap titik
-            for xi, vi, pi in zip(x, vals, pct_vals):
-                label_text = fmt_fn(vi, pi)
-                ax.annotate(label_text, (xi, vi),
-                            textcoords='offset points', xytext=(0, 10),
-                            ha='center', fontsize=7.5, fontweight='bold',
-                            color=style['color'])
+        # Efek stroke putih di sekeliling teks agar angka tidak bertabrakan dengan garis kurva
+        stroke_effect = [path_effects.withStroke(linewidth=4.5, foreground='white')]
 
-        # Y-axis: auto-scale ketat sesuai data range
+        # Annotasi di setiap titik data (posisi dinamis berdasarkan urutan nilai & gap)
+        for i_idx, xi in enumerate(x):
+            fold_values = []
+            for name in all_results:
+                v = model_fold_data[name][key][i_idx]
+                p = model_fold_data[name]['hit_rate_pct'][i_idx]
+                fold_values.append((v, p, name))
+            
+            # Urutkan model berdasarkan nilai (descending) pada fold xi
+            fold_values.sort(key=lambda item: item[0], reverse=True)
+
+            v_top, _, _ = fold_values[0]
+            v_mid, _, _ = fold_values[1]
+            v_bot, _, _ = fold_values[2]
+
+            gap_top = v_top - v_mid
+            gap_bot = v_mid - v_bot
+
+            for rank, (vi, pi, name) in enumerate(fold_values):
+                style = line_styles.get(name, {'color': 'gray'})
+                label_text = fmt_fn(vi, pi)
+
+                if rank == 0:
+                    xytext = (0, 15)
+                    va = 'bottom'
+                elif rank == 2:
+                    xytext = (0, -20)
+                    va = 'top'
+                else:
+                    if gap_top >= gap_bot:
+                        xytext = (0, 15)
+                        va = 'bottom'
+                    else:
+                        xytext = (0, -20)
+                        va = 'top'
+
+                ax.annotate(label_text, (xi, vi),
+                            textcoords='offset points', xytext=xytext,
+                            ha='center', va=va, fontsize=DATA_LABEL_FONT_SIZE, fontweight='bold',
+                            color=style['color'], path_effects=stroke_effect, zorder=5)
+
+        # Y-axis: margin ketat namun cukup (38%) untuk memberi ruang teks atas dan bawah
         y_min = min(all_vals)
         y_max = max(all_vals)
-        y_margin = (y_max - y_min) * 0.15
-        ax.set_ylim([y_min - y_margin, y_max + y_margin * 2.5])
+        y_range = y_max - y_min
+        ax.set_ylim([y_min - y_range * 0.38, y_max + y_range * 0.38])
 
-        ax.set_xlabel('Fold', fontsize=12, fontweight='bold')
-        ax.set_ylabel(ylabel, fontsize=12, fontweight='bold')
+        ax.set_xlabel('Fold', fontsize=AXIS_TITLE_FONT_SIZE, fontweight='bold', labelpad=12)
+        ax.set_ylabel(ylabel, fontsize=AXIS_TITLE_FONT_SIZE, fontweight='bold', labelpad=12)
         ax.set_xticks(x)
-        ax.set_xticklabels(fold_labels)
+        ax.set_xticklabels(fold_labels, fontsize=TICK_LABEL_FONT_SIZE, fontweight='bold')
+        ax.tick_params(axis='y', labelsize=TICK_LABEL_FONT_SIZE)
+        
+        for tick_lbl in ax.get_yticklabels():
+            tick_lbl.set_fontweight('bold')
+
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
-        ax.grid(axis='y', alpha=0.3, linestyle='-', zorder=1)
-        ax.legend(loc='lower center', bbox_to_anchor=(0.5, -0.20),
-                  ncol=3, fontsize=9, frameon=False)
+        ax.spines['left'].set_linewidth(1.8)
+        ax.spines['bottom'].set_linewidth(1.8)
+        ax.grid(axis='y', alpha=0.3, linestyle='-', linewidth=1.0, zorder=1)
+        
+        leg = ax.legend(loc='lower center', bbox_to_anchor=(0.5, -0.25),
+                        ncol=3, fontsize=LEGEND_FONT_SIZE, frameon=False)
+        for text in leg.get_texts():
+            text.set_fontweight('bold')
 
     plt.tight_layout()
     path = os.path.join(VISUALISASI_PATH, 'per_fold_comparison_all_models.png')
